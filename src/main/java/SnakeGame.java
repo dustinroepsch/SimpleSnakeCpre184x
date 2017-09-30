@@ -25,7 +25,9 @@ public class SnakeGame {
   }
 
   private void placeApple() {
-    appleLocation = new GridPosition(random.nextInt(GRID_HEIGHT), random.nextInt(GRID_WIDTH));
+    do {
+      appleLocation = new GridPosition(random.nextInt(GRID_HEIGHT), random.nextInt(GRID_WIDTH));
+    } while (grid[appleLocation.row][appleLocation.col] == GridCell.WALL);
     grid[appleLocation.row][appleLocation.col] = GridCell.APPLE;
   }
 
@@ -84,12 +86,15 @@ public class SnakeGame {
       placeApple();
     }
 
-    if (snake.isCollidingWithSelf()) {
-      //      System.exit(0);
-      System.out.println("Colliding");
+    if (snake.isCollidingWithSelf() || isWall(snake.getHead())) {
+      Main.lose();
     }
 
     snake.render(pApplet);
+  }
+
+  private boolean isWall(GridPosition head) {
+    return grid[head.row][head.col] == GridCell.WALL;
   }
 
   private void removeApple() {

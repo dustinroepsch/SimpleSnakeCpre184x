@@ -95,4 +95,8 @@ public class Snake {
   public void grow() {
     shouldGrow = true;
   }
+
+  public GridPosition getHead() {
+    return body.peekFirst();
+  }
 }
