@@ -1,7 +1,7 @@
 import processing.core.PApplet;
 
 public class Main extends PApplet {
-  public static final int SCALE_FACTOR = 3;
+  public static final int SCALE_FACTOR = 5;
 
   private SnakeGame snakeGame;
 

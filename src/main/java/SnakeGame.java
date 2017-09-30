@@ -1,11 +1,10 @@
-import processing.core.PApplet;
-
 import java.util.Random;
+import processing.core.PApplet;
 
 public class SnakeGame {
   // width and height based on nokia
-  public static final int GRID_HEIGHT = 240;
-  public static final int GRID_WIDTH = 320;
+  public static final int GRID_HEIGHT = 100;
+  public static final int GRID_WIDTH = 140;
 
   private enum GridCell {
     APPLE,
@@ -16,9 +15,11 @@ public class SnakeGame {
   private GridCell[][] grid;
   private Random random;
   private GridPosition appleLocation;
+  private Snake snake;
 
   public SnakeGame() {
     random = new Random();
+    snake = new Snake(GRID_HEIGHT / 2, GRID_WIDTH / 2);
     initializeGrid();
     placeApple();
   }
@@ -70,5 +71,13 @@ public class SnakeGame {
             col * Main.SCALE_FACTOR, row * Main.SCALE_FACTOR, Main.SCALE_FACTOR, Main.SCALE_FACTOR);
       }
     }
+
+    snake.move();
+    if (snake.isCollidingWithSelf()) {
+      //      System.exit(0);
+      System.out.println("Colliding");
+    }
+
+    snake.render(pApplet);
   }
 }
