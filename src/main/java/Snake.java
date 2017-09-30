@@ -17,6 +17,8 @@ public class Snake {
 
   private double cellsPerSecond;
   private long lastTimeMoved;
+  private int cellsPerGrow;
+  private int cellsGrown;
 
   public Snake(int row, int col) {
     body = new ArrayDeque<>();
@@ -24,6 +26,8 @@ public class Snake {
     body.add(new GridPosition(row, col));
     lastTimeMoved = System.currentTimeMillis();
     cellsPerSecond = 10;
+    cellsPerGrow = 5;
+    cellsGrown = 0;
   }
 
   public void setDirection(Direction direction) {
@@ -58,8 +62,12 @@ public class Snake {
 
     if (!shouldGrow) {
       body.removeLast();
+    } else {
+      cellsGrown++;
+      if (cellsGrown >= cellsPerGrow) {
+        shouldGrow = false;
+      }
     }
-    shouldGrow = false;
   }
 
   public boolean isCollidingWithSelf() {
@@ -93,7 +101,9 @@ public class Snake {
   }
 
   public void grow() {
+    cellsPerSecond += 1;
     shouldGrow = true;
+    cellsGrown = 0;
   }
 
   public GridPosition getHead() {
