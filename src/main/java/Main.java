@@ -1,7 +1,7 @@
 import processing.core.PApplet;
 
 public class Main extends PApplet {
-  public static final int SCALE_FACTOR = 5;
+  public static final int SCALE_FACTOR = 10;
 
   private SnakeGame snakeGame;
 
@@ -18,6 +18,11 @@ public class Main extends PApplet {
   @Override
   public void draw() {
     snakeGame.render(this);
+  }
+
+  @Override
+  public void keyPressed() {
+    snakeGame.keyPressed(keyCode);
   }
 
   public static void main(String[] args) {

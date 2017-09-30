@@ -15,13 +15,30 @@ public class Snake {
   private boolean shouldGrow;
   private Direction currentDirection = Direction.EAST;
 
+  private double cellsPerSecond;
+  private long lastTimeMoved;
+
   public Snake(int row, int col) {
     body = new ArrayDeque<>();
     shouldGrow = false;
     body.add(new GridPosition(row, col));
+    lastTimeMoved = System.currentTimeMillis();
+    cellsPerSecond = 10;
+  }
+
+  public void setDirection(Direction direction) {
+    this.currentDirection = direction;
   }
 
   public void move() {
+    double delayTime = 1000.0 / cellsPerSecond;
+
+    if (System.currentTimeMillis() - lastTimeMoved < delayTime) {
+      return;
+    }
+
+    lastTimeMoved = System.currentTimeMillis();
+
     GridPosition newHead = new GridPosition(body.peekFirst().row, body.peekFirst().col);
     switch (currentDirection) {
       case NORTH:
@@ -42,6 +59,7 @@ public class Snake {
     if (!shouldGrow) {
       body.removeLast();
     }
+    shouldGrow = false;
   }
 
   public boolean isCollidingWithSelf() {
@@ -68,5 +86,13 @@ public class Snake {
           Main.SCALE_FACTOR,
           Main.SCALE_FACTOR);
     }
+  }
+
+  public boolean isCollidingWith(GridPosition appleLocation) {
+    return body.contains(appleLocation);
+  }
+
+  public void grow() {
+    shouldGrow = true;
   }
 }
