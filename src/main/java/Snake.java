@@ -22,10 +22,10 @@ public class Snake {
 
   public Snake(int row, int col) {
     body = new ArrayDeque<>();
-    shouldGrow = false;
+    shouldGrow = true;
     body.add(new GridPosition(row, col));
     lastTimeMoved = System.currentTimeMillis();
-    cellsPerSecond = 10;
+    cellsPerSecond = 14;
     cellsPerGrow = 5;
     cellsGrown = 0;
   }
